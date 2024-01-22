@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Grades</title>
+    <script src="/kanbas/Navigation/index.js"></script>
+    <script src="/kanbas/Courses/Navigation/index.js"></script>
+    <script src="/kanbas/Courses/Grades/index.js"></script>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <script>
+              const kanbasNavigation = KanbasNavigation();
+              document.write(kanbasNavigation);
+            </script>
+          </td>
+          <td valign="top">
+            <script>
+              const courseNavigation = CourseNavigation();
+              document.write(courseNavigation);
+            </script>
+          </td>
+          <td>
+            <script>
+              const grades = Grades();
+              document.write(grades);
+            </script>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
