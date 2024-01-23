@@ -7,7 +7,7 @@ function KanbasNavigation() {
     </head>
     <body>
         <ul>
-          <li><a href="/Kanbas/Account/Profile/index.html">Account</a></li>
+          <li><a href="/Kanbas/Account/Profile/screen.html">Account</a></li>
           <li><a href="#">Dashboard</a></li>
           <li><a href="/Kanbas/Courses/Home/screen.html">Courses</a></li>
           <li><a href="#">Calendar</a></li>

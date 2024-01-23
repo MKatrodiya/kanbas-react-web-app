@@ -35,7 +35,7 @@ function CourseNavigation() {
         <li>
             <a href="#">Collaborations</a>
         </li>
-        <li><a href="#">Settings</a></li>
+        <li><a href="/Kanbas/Courses/Settings/CourseDetails/screen.html">Settings</a></li>
         </ul>
     </body>
     </html>
