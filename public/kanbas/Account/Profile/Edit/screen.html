@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Profile</title>
+        <script src="/Kanbas/Navigation/index.js"></script>
+        <script src="/Kanbas/Account/Navigation/index.js"></script>
+        <script src="/Kanbas/Account/Profile/Edit/index.js"></script>
+    </head>
+    <body>
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td valign="top">
+                        <script>
+                            const kanbasNavigation = KanbasNavigation();
+                            document.write(kanbasNavigation);
+                        </script>
+                    </td>
+                    <td valign="top">
+                        <script>
+                            const accountNavigation = AccountNavigation();
+                            document.write(accountNavigation);
+                        </script>
+                    </td>
+                    <td valign="top">
+                        <script>
+                            const editProfile = EditProfile();
+                            document.write(editProfile);
+                        </script>
+                    </td>
+                </tr>
+            </tbody>
+    </body>
+</html>

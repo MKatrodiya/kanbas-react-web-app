@@ -23,7 +23,7 @@ function Profile() {
                 <a href="https://www.youtube.com">YouTube</a>
             </td>
             <td>
-                <button type="button">Edit Profile</button>
+                <a href="/Kanbas/Account/Profile/Edit/screen.html"><button type="button">Edit Profile</button></a>
             </td>
             </tr>
         </tbody>
