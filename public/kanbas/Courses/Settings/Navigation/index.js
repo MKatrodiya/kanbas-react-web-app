@@ -2,7 +2,7 @@ function CourseNavigationSettings() {
   return `
     <html>
         <body>
-            <table width="100%">
+            <table cellpadding="5">
             <thead>
                 <tr>
                 <th>
