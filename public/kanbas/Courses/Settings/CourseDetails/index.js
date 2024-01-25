@@ -3,7 +3,7 @@ function CourseDetails() {
     <html>
     <head> </head>
     <body>
-        <table width="50%">
+        <table width="100%">
         <thead>
             <tr>
             <th>

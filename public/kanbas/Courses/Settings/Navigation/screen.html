@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Settings - Course Details</title>
+    <script src="/Kanbas/Navigation/index.js"></script>
+    <script src="/Kanbas/Courses/Navigation/index.js"></script>
+    <script src="/Kanbas/Courses/Settings/Navigation/index.js"></script>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <script>
+              const kanbasNavigation = KanbasNavigation();
+              document.write(kanbasNavigation);
+            </script>
+          </td>
+          <td valign="top">
+            <script>
+              const courseNavigation = CourseNavigation();
+              document.write(courseNavigation);
+            </script>
+          </td>
+          <td valign="top">
+            <script>
+              const courseNavSettings = CourseNavigationSettings();
+              document.write(courseNavSettings);
+            </script>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
