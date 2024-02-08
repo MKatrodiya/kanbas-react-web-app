@@ -5,6 +5,8 @@
     margin: 0px;
     width: 80px;
     height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 .wd-kanbas-navigation li {
