@@ -6,3 +6,32 @@ body {
 body * {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.font-red {
+    color: red;
+}
+
+.black-link-no-underline {
+    color: black;
+    text-decoration: none;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.bg-blue {
+    background-color: blue;
+}
+
+.bg-yellow {
+    background-color: yellow;
+}
+
+.bg-orange {
+    background-color: orange;
+}
