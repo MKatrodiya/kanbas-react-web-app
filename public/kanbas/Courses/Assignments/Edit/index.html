@@ -1,111 +1,268 @@
-<html>
-  <body>
-    <select>
-      <option value="SpeedGrader">SpeedGrader</option>
-    </select>
-    <hr />
-    <h2>Assignment Name</h2>
-    <form id="assignment-edit">
+<link rel="stylesheet" href="/libs/bootstrap/bootstrap.min.css" />
+<link
+  href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/Kanbas/Courses/Assignments/index.css" />
+<link rel="stylesheet" href="/Kanbas/Courses/Assignments/Edit/index.css" />
+<link rel="stylesheet" href="/Kanbas/styles.css" />
+<div class="float-end">
+  <button
+    class="wd-asmt-button"
+    style="color: green; background-color: white; border: none"
+  >
+    <i class="fa fa-circle-check me-2"></i>Published
+  </button>
+  <button
+    class="wd-asmt-button me-2 p-2 mb-2"
+    style="border: 1px solid lightgray; width: 30px"
+  >
+    <i class="fa-solid fa-ellipsis-vertical"></i>
+  </button>
+</div>
+<hr style="clear: both" />
+<form>
+  <div class="m-5">
+    <div class="row">
+      <label class="ps-0" for="assignment_name">Assignment Name</label>
       <input
         type="text"
-        id="assignment-name"
-        placeholder="Assignment Name"
+        name="assignmentName"
+        id="assignment_name"
+        class="form-control"
         value="A1 - ENV + HTML"
       />
-      <br />
-      <br />
+    </div>
+    <div class="row mt-4">
       <textarea
-        id="assignment-description"
-        rows="3"
-        cols="30"
-        placeholder="Assignment Description"
+        name="description"
+        id="description"
+        cols="20"
+        rows="5"
+        class="form-control"
       >
+        This assignment describes how to install the development environment and create a simple HTML page. We will also learn how to use the browser's developer tools to inspect the HTML and CSS. We will add new content to the page and learn how to use Git to manage our code. We will also learn how to deploy our code to a web server.
+        </textarea
+      >
+    </div>
+    <div class="row mt-4">
+      <div class="col-2">
+        <label class="form-label float-end" for="points">Points</label>
+      </div>
+      <div class="col-6">
+        <input
+          type="number"
+          id="points"
+          min="0"
+          max="100"
+          value="100"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-2">
+        <label class="form-label float-end" for="assignment-group">
+          Assignment Group</label
+        >
+      </div>
+      <div class="col-6">
+        <select id="assignment-group" class="form-select">
+          <option value="ASSIGNMENTS" selected="">ASSIGNMENTS</option>
+          <option value="PROJECT">PROJECT</option>
+          <option value="QUIZZES">QUIZZES</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-2">
+        <label class="form-label float-end" for="display-grade-as">
+          Display Grade as</label
+        >
+      </div>
+      <div class="col-6">
+        <select id="display-grade-as" class="form-select">
+          <option value="Percentage" selected="">Percentage</option>
+          <option value="Points">Points</option>
+          <option value="Complete/Incomplete">Complete/Incomplete</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-2">
+        <label class="form-label float-end" for="Assign"> Assign</label>
+      </div>
+      <div class="col-6">
+        <div class="row border border-1" style="margin: 3px">
+          <div class="col-12">
+            <label class="form-label mt-2" style="width: 100%">
+              <div><b>Assign to</b></div>
+              <select id="Assign" class="form-select">
+                <option value="Everyone" selected="">Everyone</option>
+                <option value="Everyone">Everyone</option>
+                <option value="Everyone">Everyone</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="col-12 mt-2">
+            <label class="form-label" for="Due"><b>Due</b></label>
+            <input
+              class="form-control"
+              id="Due"
+              type="date"
+              value="2024-01-06"
+            />
+          </div>
+
+          <div class="col-6 mt-3">
+            <label class="form-label" for="available-from">
+              <b>Available from</b></label
+            >
+            <input
+              class="form-control"
+              id="available-from"
+              type="datetime"
+              value="2024-01-07"
+            />
+          </div>
+
+          <div class="col-6 mt-3">
+            <label class="form-label" for="until"> <b>Until</b></label>
+            <input
+              class="form-control"
+              id="until"
+              type="date"
+              value="2024-01-08"
+            />
+          </div>
+
+          <div class="col-12 pe-0 ps-0 mt-4">
+            <button class="btn wd-add-asmt-button">
+              <i class="fa fa-plus"></i>
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="d-flex" style="align-items: center">
+      <div>
+        <input id="update-checkbox" type="checkbox" class="me-2" /><label
+          for="update-checkbox"
+          >Notify users that this content has changed</label
+        >
+      </div>
+      <div class="ms-auto">
+        <a href="/Kanbas/Courses/Assignments/screen.html"
+          ><button class="wd-asmt-button" type="submit">Cancel</button></a
+        >
+        <a href="/Kanbas/Courses/Assignments/screen.html"
+          ><button class="wd-asmt-button wd-btn-save" type="submit">
+            Save
+          </button></a
+        >
+      </div>
+    </div>
+  </div>
+</form>
+<!-- <select>
+  <option value="SpeedGrader">SpeedGrader</option>
+</select>
+<hr />
+<h2>Assignment Name</h2>
+<form id="assignment-edit">
+  <input
+    type="text"
+    id="assignment-name"
+    placeholder="Assignment Name"
+    value="A1 - ENV + HTML"
+  />
+  <br />
+  <br />
+  <textarea
+    id="assignment-description"
+    rows="3"
+    cols="30"
+    placeholder="Assignment Description"
+  >
 This is the assignment description...lorem ipsum</textarea
-      >
-      <br />
-      <br />
-      <label for="wd-assignments-points">Points</label><br />
-      <input
-        type="number"
-        id="wd-assignments-points"
-        placeholder="Points"
-        value="100"
-        min="0"
-        max="1000"
-      />
-      <br />
-      <br />
-      <label for="wd-assignment-group">Assignment Group</label><br />
-      <select id="wd-assignment-group">
-        <option value="1" selected>Assignments</option>
-        <option value="2">Project</option>
-        <option value="3">Quizzes</option>
-      </select>
-      <br />
-      <br />
-      <label for="wd-display-grade-as">Display Grade As</label><br />
-      <select id="wd-display-grade-as">
-        <option value="1">Points</option>
-        <option value="2" selected>Percentage</option>
-        <option value="3">Complete/Incomplete</option>
-      </select>
-      <br />
-      <br />
-      <label for="wd-submission-type">Submission Type</label><br />
-      <select id="wd-submission-type">
-        <option value="1" selected>Online</option>
-        <option value="2">On Paper</option>
-        <option value="3">No Submission</option>
-      </select>
-      <br />
-      <br />
-      <label>Online Entry Options</label><br />
-      <input type="checkbox" name="wd-entry-options" id="wd-text-entry" />
-      <label for="wd-text-entry">Text Entry</label><br />
-      <input type="checkbox" name="wd-entry-options" id="wd-website-url" />
-      <label for="wd-website-url">Website URL</label><br />
-      <input type="checkbox" name="wd-entry-options" id="wd-media-recording" />
-      <label for="wd-media-recording">Media Recording</label><br />
-      <input
-        type="checkbox"
-        name="wd-entry-options"
-        id="wd-student-annotation"
-      />
-      <label for="wd-student-annotation">Student Annotation</label><br />
-      <input type="checkbox" name="wd-entry-options" id="wd-file-upload" />
-      <label for="wd-file-upload">File Upload</label><br />
-      <br /><br />
-      <label>Peer Reviews</label><br />
-      <input type="radio" name="wd-peer-reviews" id="wd-no-peer-reviews" />
-      <label for="wd-no-peer-reviews">No Peer Reviews</label><br />
-      <input type="radio" name="wd-peer-reviews" id="wd-peer-reviews" />
-      <label for="wd-peer-reviews">Peer Reviews</label><br />
-      <input type="radio" name="wd-peer-reviews" id="wd-peer-reviews-2" />
-      <label for="wd-peer-reviews-2">Peer Reviews</label><br /><br />
-      <label>Assign</label><br />
-      <label for="wd-assign-to">Assign To</label><br />
-      <input
-        type="text"
-        id="wd-assign-to"
-        placeholder="Assign To"
-        value="Everyone"
-      /><br /><br />
-      <label for="wd-due-date">Due Date</label><br />
-      <input type="date" id="wd-due-date" value="2024-01-22" /><br /><br />
-      <label for="wd-available-from">Available From</label><br />
-      <input
-        type="date"
-        id="wd-available-from"
-        value="2024-01-22"
-      /><br /><br />
-      <label for="wd-until">Until</label><br />
-      <input type="date" id="wd-until" value="2024-01-29" /><br /><br />
-      <a href="/Kanbas/Courses/Assignments/screen.html">
-        <button type="button" id="wd-cancel">Cancel</button>
-      </a>
-      <a href="/Kanbas/Courses/Assignments/screen.html">
-        <button type="button" id="wd-save">Save</button>
-      </a>
-    </form>
-  </body>
-</html>
+  >
+  <br />
+  <br />
+  <label for="wd-assignments-points">Points</label><br />
+  <input
+    type="number"
+    id="wd-assignments-points"
+    placeholder="Points"
+    value="100"
+    min="0"
+    max="1000"
+  />
+  <br />
+  <br />
+  <label for="wd-assignment-group">Assignment Group</label><br />
+  <select id="wd-assignment-group">
+    <option value="1" selected>Assignments</option>
+    <option value="2">Project</option>
+    <option value="3">Quizzes</option>
+  </select>
+  <br />
+  <br />
+  <label for="wd-display-grade-as">Display Grade As</label><br />
+  <select id="wd-display-grade-as">
+    <option value="1">Points</option>
+    <option value="2" selected>Percentage</option>
+    <option value="3">Complete/Incomplete</option>
+  </select>
+  <br />
+  <br />
+  <label for="wd-submission-type">Submission Type</label><br />
+  <select id="wd-submission-type">
+    <option value="1" selected>Online</option>
+    <option value="2">On Paper</option>
+    <option value="3">No Submission</option>
+  </select>
+  <br />
+  <br />
+  <label>Online Entry Options</label><br />
+  <input type="checkbox" name="wd-entry-options" id="wd-text-entry" />
+  <label for="wd-text-entry">Text Entry</label><br />
+  <input type="checkbox" name="wd-entry-options" id="wd-website-url" />
+  <label for="wd-website-url">Website URL</label><br />
+  <input type="checkbox" name="wd-entry-options" id="wd-media-recording" />
+  <label for="wd-media-recording">Media Recording</label><br />
+  <input type="checkbox" name="wd-entry-options" id="wd-student-annotation" />
+  <label for="wd-student-annotation">Student Annotation</label><br />
+  <input type="checkbox" name="wd-entry-options" id="wd-file-upload" />
+  <label for="wd-file-upload">File Upload</label><br />
+  <br /><br />
+  <label>Peer Reviews</label><br />
+  <input type="radio" name="wd-peer-reviews" id="wd-no-peer-reviews" />
+  <label for="wd-no-peer-reviews">No Peer Reviews</label><br />
+  <input type="radio" name="wd-peer-reviews" id="wd-peer-reviews" />
+  <label for="wd-peer-reviews">Peer Reviews</label><br />
+  <input type="radio" name="wd-peer-reviews" id="wd-peer-reviews-2" />
+  <label for="wd-peer-reviews-2">Peer Reviews</label><br /><br />
+  <label>Assign</label><br />
+  <label for="wd-assign-to">Assign To</label><br />
+  <input
+    type="text"
+    id="wd-assign-to"
+    placeholder="Assign To"
+    value="Everyone"
+  /><br /><br />
+  <label for="wd-due-date">Due Date</label><br />
+  <input type="date" id="wd-due-date" value="2024-01-22" /><br /><br />
+  <label for="wd-available-from">Available From</label><br />
+  <input type="date" id="wd-available-from" value="2024-01-22" /><br /><br />
+  <label for="wd-until">Until</label><br />
+  <input type="date" id="wd-until" value="2024-01-29" /><br /><br />
+  <a href="/Kanbas/Courses/Assignments/screen.html">
+    <button type="button" id="wd-cancel">Cancel</button>
+  </a>
+  <a href="/Kanbas/Courses/Assignments/screen.html">
+    <button type="button" id="wd-save">Save</button>
+  </a>
+</form> -->
