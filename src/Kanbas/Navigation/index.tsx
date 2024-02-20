@@ -17,16 +17,16 @@ function KanbasNavigation() {
     return (
         <ul className="wd-kanbas-navigation">
             <li>
-                <a href="http://northeastern.edu">
+                <Link to="http://northeastern.edu">
                     <img
                         src="/images/Northeastern_logo.png"
                         width="60px"
                         alt="Northeastern University Logo" />
-                </a>
+                </Link>
             </li>
             {links.map((link, index) => (
                 <li key={index} className={pathname.includes(link.label) ? "wd-active" : ""}>
-                    <Link to={`/Kanbas/${link.label}`}> {link.icon} {link.label} </Link>
+                    <Link to={`/Kanbas/${link.path}`}> {link.icon} {link.label} </Link>
                 </li>
             ))}
         </ul>
