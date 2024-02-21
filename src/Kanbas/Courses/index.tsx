@@ -3,6 +3,8 @@ import { Navigate, Route, Routes, useLocation, useParams } from "react-router-do
 import { HiMiniBars3 } from "react-icons/hi2";
 import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
+import { FaGlasses } from "react-icons/fa";
+import Home from "./Home";
 
 function Courses() {
     const { courseId } = useParams();
@@ -13,16 +15,27 @@ function Courses() {
     currentPath = decodeURIComponent(currentPath);
 
     return (
-        <div>
-            <h2><HiMiniBars3 /> {course?.name + " > " + currentPath}</h2>
-            <CourseNavigation />
-            <div>
+        <>
+            <div className="wd-breadcrumbs">
+                <div className="d-none d-md-flex ms-4 p-2" style={{ alignItems: "center" }}>
+                    <HiMiniBars3 className="text-danger" />
+                    <div className="ms-2 text-danger align-middle">{course?.name}</div>
+                    <div className="ms-2 align-middle d-inline"> {"> " + currentPath}</div>
+                    <div style={{ marginLeft: "auto" }}>
+                        <button className="btn" style={{ backgroundColor: "#f5f5f5" }}>
+                            <FaGlasses /> Student View
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr className="mt-2 mb-4" />
+            <div className="d-flex">
+                <CourseNavigation />
                 <div
-                    className="overflow-y-scroll position-fixed bottom-0 end-0"
-                    style={{ left: "320px", top: "50px" }} >
+                    className="d-block w-100" >
                     <Routes>
                         <Route path="/" element={<Navigate to="Home" />} />
-                        <Route path="Home" element={<h1>Home</h1>} />
+                        <Route path="Home" element={<Home />} />
                         <Route path="Modules" element={<Modules />} />
                         <Route path="Piazza" element={<h1>Piazza</h1>} />
                         <Route path="Assignments" element={<h1>Assignments</h1>} />
@@ -32,7 +45,7 @@ function Courses() {
                     </Routes>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 export default Courses;

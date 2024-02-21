@@ -8,25 +8,24 @@ function ModuleList() {
     const modulesList = modules.filter((module) => module.course === courseId);
     const [selectedModule, setSelectedModule] = useState(modulesList[0]);
     return (
-        <div className="me-4">
-            {/* <!-- Add buttons here --> */}
+        <div className="flex-grow-1 d-block ms-2 me-2">
             <div className="float-end wd-course-button-bar">
                 <button className="btn wd-course-button">Collapse All</button>
                 <button className="btn wd-course-button ms-2">View Progress</button>
                 <select
                     className="form-select wd-publish d-inline wd-course-button ms-2"
                 >
-                    <FaCheckCircle className="me-1" />
+                    <FaCheckCircle className="me-1" />bj
                     <option>Publish All</option>
                     <option>Unpublish All</option>
                     <option>Unpublish All</option>
                 </select>
-                <button className="btn btn-danger ms-2">+ Module</button>
+                <button className="btn btn-danger ms-2" style={{ borderColor: "red" }}>+ Module</button>
                 <button className="btn wd-course-button ms-2">
                     <FaEllipsisV />
                 </button>
             </div>
-            <hr className="mt-1" style={{ clear: "both" }} />
+            <hr style={{ clear: "both" }} />
             <ul className="list-group wd-modules">
                 {modulesList.map((module, index) => (
                     <li key={index}

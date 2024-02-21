@@ -1,9 +1,10 @@
-.wd-course-button-bar {
-    height: 60px;
+.wd-breadcrumbs {
+    font-size: 1.5em;
 }
 
 .wd-course-button-bar * {
     border-radius: 0;
+    margin-bottom: 5px;
 }
 
 .btn {
@@ -13,6 +14,7 @@
 
 .wd-publish {
     width: 150px;
+    height: 38px;
 }
 
 .wd-course-button {
