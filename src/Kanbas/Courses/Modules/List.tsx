@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./index.css";
 import { modules } from "../../Database";
-import { FaEllipsisV, FaCheckCircle, FaPlusCircle, FaGripVertical, FaChevronDown, FaPlus } from "react-icons/fa";
+import { FaEllipsisV, FaCheckCircle, FaPlusCircle, FaGripVertical, FaChevronDown, FaPlus, FaChevronRight } from "react-icons/fa";
 import { useParams } from "react-router";
+
 function ModuleList() {
     const { courseId } = useParams();
     const modulesList = modules.filter((module) => module.course === courseId);
     const [selectedModule, setSelectedModule] = useState(modulesList[0]);
+
     return (
         <div className="flex-grow-1 d-block ms-2 me-2">
             <div className="float-end wd-course-button-bar">
@@ -33,7 +35,7 @@ function ModuleList() {
                         onClick={() => setSelectedModule(module)}>
                         <div>
                             <FaGripVertical className="me-1" />
-                            <FaChevronDown className="me-2" />
+                            {selectedModule._id === module._id ? <FaChevronDown className="me-2" /> : <FaChevronRight className="me-2" />}
                             {module?.name}
                             <span className="float-end">
                                 <FaCheckCircle className="text-success" />

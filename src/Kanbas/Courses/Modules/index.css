@@ -21,6 +21,10 @@
     background-color: #f5f5f5;
 }
 
+.wd-course-button:hover {
+    background-color: #f5f5f589;
+}
+
 .wd-course-modules {
     clear: both;
 }
