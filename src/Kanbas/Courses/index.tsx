@@ -14,6 +14,7 @@ import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import Grades from "./Grades";
+import CollapsibleNavigation from "./CollapsibleNavigation";
 
 function Courses() {
   const { courseId } = useParams();
