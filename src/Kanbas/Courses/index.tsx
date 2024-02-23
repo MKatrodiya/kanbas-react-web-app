@@ -3,9 +3,11 @@ import { Navigate, Route, Routes, useLocation, useParams } from "react-router-do
 import { HiMiniBars3 } from "react-icons/hi2";
 import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
-import { FaGlasses } from "react-icons/fa";
+import { FaAngleRight, FaCaretRight, FaGlasses } from "react-icons/fa";
 import Home from "./Home";
 import Assignments from "./Assignments";
+import AssignmentEditor from "./Assignments/Editor";
+import Grades from "./Grades";
 
 function Courses() {
     const { courseId } = useParams();
@@ -14,6 +16,9 @@ function Courses() {
     const paths = pathname.split(/Courses\/[a-zA-Z0-9]+\//)[1];
     let currentPath = paths.split("/")[0];
     currentPath = decodeURIComponent(currentPath);
+    const assignmentId = paths?.split("/")?.[1];
+    debugger;
+
 
     return (
         <>
@@ -21,7 +26,8 @@ function Courses() {
                 <div className="d-none d-md-flex ms-4 p-2" style={{ alignItems: "center" }}>
                     <HiMiniBars3 className="text-danger" />
                     <div className="ms-2 text-danger align-middle">{course?.name}</div>
-                    <div className="ms-2 align-middle d-inline"> {"> " + currentPath}</div>
+                    <div className={`ms-2 align-middle d-inline`}><FaAngleRight />{currentPath}</div>
+                    {assignmentId && <div className={`ms-2 align-middle d-inline`}><FaAngleRight />{assignmentId}</div>}
                     <div style={{ marginLeft: "auto" }}>
                         <button className="btn" style={{ backgroundColor: "#f5f5f5" }}>
                             <FaGlasses /> Student View
@@ -40,8 +46,8 @@ function Courses() {
                         <Route path="Modules" element={<Modules />} />
                         <Route path="Piazza" element={<h1>Piazza</h1>} />
                         <Route path="Assignments" element={<Assignments />} />
-                        <Route path="Assignments/:assignmentId" element={<h1>Assignment Editor</h1>} />
-                        <Route path="Grades" element={<h1>Grades</h1>} />
+                        <Route path="Assignments/:assignmentId" element={<AssignmentEditor />} />
+                        <Route path="Grades" element={<Grades />} />
                         <Route path="/*" element={<h1>Not Available</h1>} />
                     </Routes>
                 </div>

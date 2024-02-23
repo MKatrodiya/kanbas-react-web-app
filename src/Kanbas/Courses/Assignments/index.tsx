@@ -68,8 +68,8 @@ function Assignments() {
                                         <FaCheckCircle className="text-success" /><FaEllipsisV className="ms-2" /></span>
                                     <br />
                                     <div>
-                                        <span className="text-danger ms-5">Multiple Modules | </span>
-                                        <b>Due</b> {date} |
+                                        <span className="text-danger ms-5">Multiple Modules </span>
+                                        | <b>Due</b> {date} |
                                         {assignment.points} pts
                                     </div>
                                 </li>);
