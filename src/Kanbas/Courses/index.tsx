@@ -1,4 +1,4 @@
-import { courses } from "../../Kanbas/Database";
+import db from "../../Kanbas/Database";
 import {
   Navigate,
   Route,
@@ -18,7 +18,7 @@ import CollapsibleNavigation from "./CollapsibleNavigation";
 
 function Courses() {
   const { courseId } = useParams();
-  const course = courses.find((course) => course._id === courseId);
+  const course = db.courses.find((course) => course._id === courseId);
   const { pathname } = useLocation();
   const paths = pathname.split(/Courses\/[a-zA-Z0-9]+\//)[1];
   let currentPath = paths.split("/")[0];

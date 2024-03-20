@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./index.css";
-import { courses } from "../../Database";
+import db from "../../Database";
 
 function CollapsibleNavigation() {
   const links = [
@@ -100,7 +100,7 @@ function CollapsibleNavigation() {
   const [collapsed, setCollapsed] = useState(true);
   const { pathname } = useLocation();
   const courseId = pathname.split("/")?.[3];
-  const course = courses.find((course) => course._id === courseId);
+  const course = db.courses.find((course) => course._id === courseId);
   const paths = pathname.split(/Courses\/[a-zA-Z0-9]+\//)[1];
   let currentPath = paths?.split("/")[0];
   const navigate = useNavigate();
