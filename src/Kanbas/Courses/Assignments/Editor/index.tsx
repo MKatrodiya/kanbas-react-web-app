@@ -21,7 +21,7 @@ function AssignmentEditor() {
   const dispatch = useDispatch();
   const handleSave = () => {
     if (assignmentId !== "0") {
-      dispatch(updateAssignment(assignmentId));
+      dispatch(updateAssignment(assignment));
     } else {
       dispatch(addAssignment({ ...assignment, course: courseId }));
     }
