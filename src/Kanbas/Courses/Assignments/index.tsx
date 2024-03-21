@@ -33,18 +33,16 @@ function MyVerticallyCenteredModal(props: any) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <h4>{}</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p> */}
+        <b>Assignment Name:</b> {props.assignmentToDelete?.title}
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>No</Button>
+        <Button className="btn btn-success" onClick={props.onHide}>
+          No
+        </Button>
         <Button
+          className="btn btn-danger"
           onClick={() => {
-            dispatch(deleteAssignment(props.assignmentToDelete));
+            dispatch(deleteAssignment(props?.assignmentToDelete?._id));
             props.onHide();
           }}
         >
@@ -63,7 +61,7 @@ function Assignments() {
   const assignmentList = assignments.filter(
     (assignment) => assignment.course === courseId
   );
-  const [assignmentToDelete, setAssignmentToDelete] = React.useState("");
+  const [assignmentToDelete, setAssignmentToDelete] = React.useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
@@ -142,7 +140,7 @@ function Assignments() {
                       variant="btn me-2"
                       onClick={() => {
                         setModalShow(true);
-                        setAssignmentToDelete(assignment?._id);
+                        setAssignmentToDelete(assignment);
                       }}
                     >
                       <FaTrash
