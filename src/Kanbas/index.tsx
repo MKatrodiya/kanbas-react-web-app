@@ -6,6 +6,8 @@ import "./styles.css";
 import CollapsibleNavigation from "./Courses/CollapsibleNavigation";
 import { useState } from "react";
 import db from "./Database";
+import store from "./store";
+import { Provider } from "react-redux";
 
 function Kanbas() {
   const [courses, setCourses] = useState(db.courses);
@@ -40,33 +42,35 @@ function Kanbas() {
   return (
     <>
       <CollapsibleNavigation />
-      <div className="d-flex">
-        <KanbasNavigation />
-        <div style={{ flexGrow: 1 }}>
-          <Routes>
-            <Route path="/" element={<Navigate to="Dashboard" />} />
-            <Route path="Account" element={<h1>Account</h1>} />
-            <Route
-              path="Dashboard"
-              element={
-                <Dashboard
-                  courses={courses}
-                  course={course}
-                  setCourse={setCourse}
-                  addNewCourse={addNewCourse}
-                  deleteCourse={deleteCourse}
-                  updateCourse={updateCourse}
-                />
-              }
-            />
-            <Route path="Courses/*" element={<h1>Courses</h1>} />
-            <Route
-              path="Courses/:courseId/*"
-              element={<Courses courses={courses} />}
-            />
-          </Routes>
+      <Provider store={store}>
+        <div className="d-flex">
+          <KanbasNavigation />
+          <div style={{ flexGrow: 1 }}>
+            <Routes>
+              <Route path="/" element={<Navigate to="Dashboard" />} />
+              <Route path="Account" element={<h1>Account</h1>} />
+              <Route
+                path="Dashboard"
+                element={
+                  <Dashboard
+                    courses={courses}
+                    course={course}
+                    setCourse={setCourse}
+                    addNewCourse={addNewCourse}
+                    deleteCourse={deleteCourse}
+                    updateCourse={updateCourse}
+                  />
+                }
+              />
+              <Route path="Courses/*" element={<h1>Courses</h1>} />
+              <Route
+                path="Courses/:courseId/*"
+                element={<Courses courses={courses} />}
+              />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </Provider>
     </>
   );
 }

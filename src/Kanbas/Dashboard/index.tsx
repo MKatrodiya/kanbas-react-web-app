@@ -51,7 +51,7 @@ function Dashboard({
       <button className="btn btn-success" onClick={addNewCourse}>
         <FaPlus></FaPlus> Add Course
       </button>
-      <button className="btn btn-secondary" onClick={updateCourse}>
+      <button className="btn btn-secondary ms-2" onClick={updateCourse}>
         <FaEdit></FaEdit> Update Course
       </button>
       <div className="row">
@@ -89,7 +89,7 @@ function Dashboard({
                     Go{" "}
                   </Link>
                   <button
-                    className="btn btn-warning"
+                    className="btn btn-warning ms-2"
                     onClick={(event) => {
                       event.preventDefault();
                       setCourse(course);
