@@ -3,11 +3,13 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import db from "../../../Database";
 import "./index.css";
 import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { KanbasState } from "../../../store";
 
 function AssignmentEditor() {
   const { assignmentId } = useParams();
-  const assignment = db.assignments.find(
-    (assignment) => assignment._id === assignmentId
+  const assignment = useSelector(
+    (state: KanbasState) => state.assignmentsReducer.assignment
   );
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ function AssignmentEditor() {
     console.log("Actually saving assignment TBD in later assignments");
     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
   };
+  const dueDate = assignment?.dueDate.split("T")[0];
+  debugger;
 
   return (
     <div className="flex-grow-1 d-block ms-2 me-2">
@@ -143,7 +147,7 @@ function AssignmentEditor() {
                     className="form-control"
                     id="Due"
                     type="date"
-                    value="2024-01-06"
+                    value={dueDate}
                   />
                 </div>
 

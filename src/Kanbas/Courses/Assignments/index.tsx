@@ -7,15 +7,23 @@ import {
   FaPlus,
   FaRegStickyNote,
 } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import db from "../../Database";
 import "./index.css";
+import { setAssignment } from "./assignmentsReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { KanbasState } from "../../store";
 
 function Assignments() {
   const { courseId } = useParams();
-  const assignmentList = db.assignments.filter(
+  const assignments = useSelector(
+    (state: KanbasState) => state.assignmentsReducer.assignments
+  );
+  const assignmentList = assignments.filter(
     (assignment) => assignment.course === courseId
   );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div className="flex-grow-1 d-block ms-2 me-2">
@@ -32,7 +40,13 @@ function Assignments() {
           <button className="btn wd-asmt-button me-2">
             <FaPlus /> Group
           </button>
-          <button className="btn btn-danger me-2" style={{ marginTop: "10px" }}>
+          <button
+            className="btn btn-danger me-2"
+            style={{ marginTop: "10px" }}
+            onClick={() => {
+              navigate(`/Kanbas/Courses/${courseId}/Assignments/0`);
+            }}
+          >
             <FaPlus /> Assignment
           </button>
           <button className="btn wd-asmt-button me-2">
@@ -70,6 +84,7 @@ function Assignments() {
                   <FaRegStickyNote className="me-2 text-success" />
                   <Link
                     to={`/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}
+                    onClick={() => dispatch(setAssignment(assignment))}
                     style={{ fontSize: "1.25em" }}
                   >
                     {assignment.title}
