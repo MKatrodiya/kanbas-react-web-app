@@ -6,8 +6,11 @@ const initialState = {
   assignment: {
     course: "",
     title: "New Assignment",
-    dueDate: "New Description",
+    description: "New Description",
+    dueDate: new Date().toISOString(),
     points: 100,
+    availableFromDate: new Date().toISOString(),
+    availableUntilDate: new Date().toISOString(),
   },
 };
 
@@ -17,8 +20,8 @@ const assignmentsReducer = createSlice({
   reducers: {
     addAssignment: (state, action) => {
       state.assignments = [
-        { ...action.payload, _id: new Date().getTime().toString() },
         ...state.assignments,
+        { ...action.payload, _id: new Date().getTime().toString() },
       ];
     },
     deleteAssignment: (state, action) => {

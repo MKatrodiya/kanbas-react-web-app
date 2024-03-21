@@ -3,8 +3,13 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import db from "../../../Database";
 import "./index.css";
 import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
+import {
+  addAssignment,
+  setAssignment,
+  updateAssignment,
+} from "../assignmentsReducer";
 
 function AssignmentEditor() {
   const { assignmentId } = useParams();
@@ -13,12 +18,18 @@ function AssignmentEditor() {
   );
   const { courseId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSave = () => {
-    console.log("Actually saving assignment TBD in later assignments");
+    if (assignmentId !== "0") {
+      dispatch(updateAssignment(assignmentId));
+    } else {
+      dispatch(addAssignment({ ...assignment, course: courseId }));
+    }
     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
   };
   const dueDate = assignment?.dueDate.split("T")[0];
-  debugger;
+  const availableFromDate = assignment?.availableFromDate.split("T")[0];
+  const availableUntilDate = assignment?.availableUntilDate.split("T")[0];
 
   return (
     <div className="flex-grow-1 d-block ms-2 me-2">
@@ -50,6 +61,11 @@ function AssignmentEditor() {
               id="assignment_name"
               className="form-control"
               value={assignment?.title}
+              onChange={(e) =>
+                dispatch(
+                  setAssignment({ ...assignment, title: e.target.value })
+                )
+              }
             />
           </div>
           <div className="row mt-4">
@@ -59,12 +75,13 @@ function AssignmentEditor() {
               cols={20}
               rows={5}
               className="form-control"
+              onChange={(e) =>
+                dispatch(
+                  setAssignment({ ...assignment, description: e.target.value })
+                )
+              }
             >
-              This is a description of the assignment. Lorem ipsum dolor sit
-              amet consectetur adipisicing elit. Iusto modi temporibus, nesciunt
-              ea facilis alias tempora deserunt est, corrupti sapiente
-              aspernatur molestias, ex inventore eligendi a accusantium mollitia
-              earum consequuntur!
+              {assignment?.description}
             </textarea>
           </div>
           <div className="row mt-4">
@@ -81,6 +98,11 @@ function AssignmentEditor() {
                 max="100"
                 value={assignment?.points}
                 className="form-control"
+                onChange={(e) =>
+                  dispatch(
+                    setAssignment({ ...assignment, points: e.target.value })
+                  )
+                }
               />
             </div>
           </div>
@@ -94,7 +116,7 @@ function AssignmentEditor() {
               </label>
             </div>
             <div className="col-6">
-              <select id="assignment-group" className="form-select">
+              <select id="assignment-group" className="form-select" disabled>
                 <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                 <option value="PROJECT">PROJECT</option>
                 <option value="QUIZZES">QUIZZES</option>
@@ -111,7 +133,7 @@ function AssignmentEditor() {
               </label>
             </div>
             <div className="col-6">
-              <select id="display-grade-as" className="form-select">
+              <select id="display-grade-as" className="form-select" disabled>
                 <option value="Percentage">Percentage</option>
                 <option value="Points">Points</option>
                 <option value="Complete/Incomplete">Complete/Incomplete</option>
@@ -131,7 +153,7 @@ function AssignmentEditor() {
                     <div>
                       <b>Assign to</b>
                     </div>
-                    <select id="Assign" className="form-select">
+                    <select id="Assign" className="form-select" disabled>
                       <option value="Everyone">Everyone</option>
                       <option value="Everyone">Everyone</option>
                       <option value="Everyone">Everyone</option>
@@ -148,6 +170,14 @@ function AssignmentEditor() {
                     id="Due"
                     type="date"
                     value={dueDate}
+                    onChange={(e) =>
+                      dispatch(
+                        setAssignment({
+                          ...assignment,
+                          dueDate: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </div>
 
@@ -158,8 +188,16 @@ function AssignmentEditor() {
                   <input
                     className="form-control"
                     id="available-from"
-                    type="datetime"
-                    value="2024-01-07"
+                    type="date"
+                    value={availableFromDate}
+                    onChange={(e) =>
+                      dispatch(
+                        setAssignment({
+                          ...assignment,
+                          availableFromDate: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </div>
 
@@ -171,12 +209,23 @@ function AssignmentEditor() {
                     className="form-control"
                     id="until"
                     type="date"
-                    value="2024-01-08"
+                    value={availableUntilDate}
+                    onChange={(e) =>
+                      dispatch(
+                        setAssignment({
+                          ...assignment,
+                          availableUntilDate: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </div>
 
                 <div className="col-12 pe-0 ps-0 mt-4">
-                  <button className="btn wd-add-asmt-button">
+                  <button
+                    className="btn wd-add-asmt-button"
+                    onClick={(e) => e.preventDefault()}
+                  >
                     <i className="fa fa-plus"></i>
                     Add
                   </button>
@@ -187,7 +236,12 @@ function AssignmentEditor() {
           <hr />
           <div className="d-flex" style={{ alignItems: "center" }}>
             <div>
-              <input id="update-checkbox" type="checkbox" className="me-2" />
+              <input
+                id="update-checkbox"
+                type="checkbox"
+                className="me-2"
+                disabled
+              />
               <label htmlFor="update-checkbox">
                 Notify users that this content has changed
               </label>
