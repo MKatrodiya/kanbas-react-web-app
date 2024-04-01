@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+kanbas-node-server-app/node_modules
 
 # testing
 /coverage
