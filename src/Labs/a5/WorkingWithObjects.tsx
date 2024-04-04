@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 function WorkingWithObjects() {
   const [assignment, setAssignment] = useState({
     id: 1,
@@ -30,8 +32,8 @@ function WorkingWithObjects() {
     fetchAssignment();
   }, []);
 
-  const ASSIGNMENT_URL = "http://localhost:4000/a5/assignment";
-  const MODULE_URL = "http://localhost:4000/a5/module";
+  const ASSIGNMENT_URL = `${API_BASE}/a5/assignment`;
+  const MODULE_URL = `${API_BASE}/a5/module`;
 
   return (
     <div>
@@ -94,14 +96,11 @@ function WorkingWithObjects() {
         Update Completed
       </a>
       <h4>Retrieving Objects</h4>
-      <a href="http://localhost:4000/a5/assignment" className="btn btn-primary">
+      <a href={`${API_BASE}/a5/assignment`} className="btn btn-primary">
         Get Assignment
       </a>
       <h4>Retrieving Properties</h4>
-      <a
-        href="http://localhost:4000/a5/assignment/title"
-        className="btn btn-primary"
-      >
+      <a href={`${API_BASE}/a5/assignment/title`} className="btn btn-primary">
         Get Title
       </a>
 
@@ -126,13 +125,10 @@ function WorkingWithObjects() {
         Update Description
       </a>
       <h4>Retrieving Objects</h4>
-      <a href="http://localhost:4000/a5/module" className="btn btn-primary">
+      <a href={`${API_BASE}/a5/module`} className="btn btn-primary">
         Get Module
       </a>
-      <a
-        href="http://localhost:4000/a5/module/name"
-        className="btn btn-primary"
-      >
+      <a href={`${API_BASE}/a5/module/name`} className="btn btn-primary">
         Get Module Name
       </a>
     </div>
