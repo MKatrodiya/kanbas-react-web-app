@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import db from "../../Database";
 import {
@@ -14,17 +14,34 @@ import { useParams } from "react-router";
 import { FaTrash } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
 import { KanbasState } from "../../store";
-import { addModule, updateModule, deleteModule, setModule } from "./reducer";
+import {
+  addModule,
+  updateModule,
+  deleteModule,
+  setModule,
+  setModules,
+} from "./reducer";
+import { findModulesForCourse, createModule } from "./client";
 
 function ModuleList() {
   const { courseId } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    findModulesForCourse(courseId).then((modules) => {
+      dispatch(setModules(modules));
+    });
+  });
   const modulesList = useSelector(
     (state: KanbasState) => state.modulesReducer.modules
   );
   const module = useSelector(
     (state: KanbasState) => state.modulesReducer.module
   );
-  const dispatch = useDispatch();
+  const handleAddModule = () => {
+    createModule(courseId, module).then((module) => {
+      dispatch(addModule(module));
+    });
+  };
 
   const [selectedModule, setSelectedModule] = useState(modulesList[0]);
 
@@ -68,12 +85,7 @@ function ModuleList() {
           )
         }
       />
-      <button
-        className="btn btn-success ms-2 mb-1"
-        onClick={() => {
-          dispatch(addModule({ ...module, course: courseId }));
-        }}
-      >
+      <button className="btn btn-success ms-2 mb-1" onClick={handleAddModule}>
         Add
       </button>
       <button
