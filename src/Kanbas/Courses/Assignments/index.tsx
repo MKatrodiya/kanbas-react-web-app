@@ -22,48 +22,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import * as client from "./client";
 
-function MyVerticallyCenteredModal(props: any) {
-  const dispatch = useDispatch();
-  const assignmentId = props?.assignmentToDelete?._id;
-  const handleDeleteAssinment = () => {
-    client.deleteAssignment(assignmentId).then(() => {
-      dispatch(deleteAssignment(assignmentId));
-    });
-  };
-
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Are you sure you want to delete this assignment?
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <b>Assignment Name:</b> {props.assignmentToDelete?.title}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn btn-success" onClick={props.onHide}>
-          No
-        </Button>
-        <Button
-          className="btn btn-danger"
-          onClick={() => {
-            handleDeleteAssinment();
-            props.onHide();
-          }}
-        >
-          Yes
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
 function Assignments() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
@@ -178,4 +136,47 @@ function Assignments() {
     </div>
   );
 }
+
+function MyVerticallyCenteredModal(props: any) {
+  const dispatch = useDispatch();
+  const assignmentId = props?.assignmentToDelete?._id;
+  const handleDeleteAssinment = () => {
+    client.deleteAssignment(assignmentId).then(() => {
+      dispatch(deleteAssignment(assignmentId));
+    });
+  };
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Are you sure you want to delete this assignment?
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <b>Assignment Name:</b> {props.assignmentToDelete?.title}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button className="btn btn-success" onClick={props.onHide}>
+          No
+        </Button>
+        <Button
+          className="btn btn-danger"
+          onClick={() => {
+            handleDeleteAssinment();
+            props.onHide();
+          }}
+        >
+          Yes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
 export default Assignments;

@@ -22,13 +22,13 @@ function AssignmentEditor() {
   const navigate = useNavigate();
   const handleSave = () => {
     if (assignmentId !== "0") {
-      client
-        .updateAssignment(assignment)
-        .then((assignment) => dispatch(updateAssignment(assignment)));
+      client.updateAssignment(assignment).then((status) => {
+        dispatch(updateAssignment(assignment));
+      });
     } else {
       client
         .createAssignment(courseId, assignment)
-        .then((assignment) => dispatch(addAssignment(assignment)));
+        .then((status) => dispatch(addAssignment(assignment)));
     }
     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
   };
