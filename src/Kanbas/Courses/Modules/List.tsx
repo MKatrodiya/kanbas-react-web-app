@@ -21,16 +21,16 @@ import {
   setModule,
   setModules,
 } from "./reducer";
-import { findModulesForCourse, createModule } from "./client";
+import * as client from "./client";
 
 function ModuleList() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    findModulesForCourse(courseId).then((modules) => {
+    client.findModulesForCourse(courseId).then((modules) => {
       dispatch(setModules(modules));
     });
-  });
+  }, [courseId]);
   const modulesList = useSelector(
     (state: KanbasState) => state.modulesReducer.modules
   );
@@ -38,12 +38,21 @@ function ModuleList() {
     (state: KanbasState) => state.modulesReducer.module
   );
   const handleAddModule = () => {
-    createModule(courseId, module).then((module) => {
+    client.createModule(courseId, module).then((module) => {
       dispatch(addModule(module));
     });
   };
+  const handleDeleteModule = (moduleId: string) => {
+    client.deleteModule(moduleId).then((status) => {
+      dispatch(deleteModule(moduleId));
+    });
+  };
+  const handleUpdateModule = async () => {
+    const status = await client.updateModule(module);
+    dispatch(updateModule(module));
+  };
 
-  const [selectedModule, setSelectedModule] = useState(modulesList[0]);
+  const [selectedModule, setSelectedModule] = useState(modulesList?.[0]);
 
   return (
     <div className="flex-grow-1 d-block ms-2 me-2">
@@ -74,7 +83,7 @@ function ModuleList() {
       <hr style={{ clear: "both" }} />
       <input
         className="mb-2 w-75"
-        value={module.name}
+        value={module?.name}
         style={{ height: "38px" }}
         onChange={(e) =>
           dispatch(
@@ -90,16 +99,14 @@ function ModuleList() {
       </button>
       <button
         className="btn btn-success ms-2 mb-1"
-        onClick={() => {
-          dispatch(updateModule(module));
-        }}
+        onClick={handleUpdateModule}
       >
         Update
       </button>
       <br />
       <textarea
         className="mb-2 w-75"
-        value={module.description}
+        value={module?.description}
         onChange={(e) =>
           dispatch(
             setModule({
@@ -111,7 +118,7 @@ function ModuleList() {
       />
       <ul className="list-group wd-modules">
         {modulesList
-          .filter((module) => module.course === courseId)
+          .filter((module) => module?.course === courseId)
           .map((module, index) => (
             <li
               key={index}
@@ -120,7 +127,7 @@ function ModuleList() {
             >
               <div>
                 <FaGripVertical className="me-1" />
-                {selectedModule._id === module._id ? (
+                {selectedModule?._id === module?._id ? (
                   <FaChevronDown className="me-2" />
                 ) : (
                   <FaChevronRight className="me-2" />
@@ -141,7 +148,7 @@ function ModuleList() {
                   </button>
                   <button
                     className="btn ms-2"
-                    onClick={() => dispatch(deleteModule(module._id))}
+                    onClick={() => handleDeleteModule(module?._id)}
                   >
                     <FaTrash
                       className="text-danger"
@@ -153,7 +160,7 @@ function ModuleList() {
                   <FaEllipsisV className="ms-2" />
                 </span>
               </div>
-              {selectedModule._id === module._id && (
+              {selectedModule?._id === module?._id && (
                 <ul className="list-group">
                   {module?.lessons?.map((lesson: any, index: any) => (
                     <li className="list-group-item" key={index}>

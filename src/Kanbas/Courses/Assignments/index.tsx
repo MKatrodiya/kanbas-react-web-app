@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FaCheckCircle,
   FaChevronRight,
@@ -9,16 +9,27 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import db from "../../Database";
 import "./index.css";
-import { deleteAssignment, setAssignment } from "./assignmentsReducer";
+import {
+  addAssignment,
+  deleteAssignment,
+  setAssignment,
+  setAssignments,
+} from "./assignmentsReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import * as client from "./client";
 
 function MyVerticallyCenteredModal(props: any) {
   const dispatch = useDispatch();
+  const assignmentId = props?.assignmentToDelete?._id;
+  const handleDeleteAssinment = () => {
+    client.deleteAssignment(assignmentId).then(() => {
+      dispatch(deleteAssignment(assignmentId));
+    });
+  };
 
   return (
     <Modal
@@ -42,7 +53,7 @@ function MyVerticallyCenteredModal(props: any) {
         <Button
           className="btn btn-danger"
           onClick={() => {
-            dispatch(deleteAssignment(props?.assignmentToDelete?._id));
+            handleDeleteAssinment();
             props.onHide();
           }}
         >
@@ -55,15 +66,17 @@ function MyVerticallyCenteredModal(props: any) {
 
 function Assignments() {
   const { courseId } = useParams();
-  const assignments = useSelector(
+  const dispatch = useDispatch();
+  useEffect(() => {
+    client.getAllAssignmentsForCourse(courseId).then((assigmentsResponse) => {
+      dispatch(setAssignments(assigmentsResponse));
+    });
+  }, [courseId]);
+  const assignmentList = useSelector(
     (state: KanbasState) => state.assignmentsReducer.assignments
-  );
-  const assignmentList = assignments.filter(
-    (assignment) => assignment.course === courseId
   );
   const [assignmentToDelete, setAssignmentToDelete] = React.useState({});
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
