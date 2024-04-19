@@ -2,6 +2,7 @@ import KanbasNavigation from "./Navigation";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Courses from "./Courses";
+import * as coursesClient from "./Courses/client";
 import "./styles.css";
 import CollapsibleNavigation from "./Courses/CollapsibleNavigation";
 import { useEffect, useState } from "react";
@@ -10,14 +11,11 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import Account from "./Account";
 
-const API_BASE = process.env.REACT_APP_API_BASE;
-
 function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
-  const COURSES_API = `${API_BASE}/api/courses`;
   const findAllCourses = async () => {
-    const response = await axios.get(COURSES_API);
-    setCourses(response.data);
+    const response = await coursesClient.findAllCourses();
+    setCourses(response);
   };
   useEffect(() => {
     findAllCourses();
@@ -32,15 +30,15 @@ function Kanbas() {
     semester: "Fall 2024",
   });
   const addNewCourse = async () => {
-    const response = await axios.post(COURSES_API, course);
-    setCourses([...courses, response.data]);
+    const response = await coursesClient.createCourse(course);
+    setCourses([...courses, response]);
   };
   const deleteCourse = async (courseId: string) => {
-    const response = await axios.delete(`${COURSES_API}/${courseId}`);
+    await coursesClient.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
   const updateCourse = async () => {
-    const response = await axios.put(`${COURSES_API}/${course._id}`, course);
+    await coursesClient.updateCourse(course);
     setCourses(
       courses.map((c) => {
         if (c._id === course._id) {
