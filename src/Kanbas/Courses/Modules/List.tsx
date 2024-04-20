@@ -51,7 +51,6 @@ function ModuleList() {
     const status = await client.updateModule(module);
     dispatch(updateModule(module));
   };
-
   const [selectedModule, setSelectedModule] = useState(modulesList?.[0]);
 
   return (
@@ -61,7 +60,6 @@ function ModuleList() {
         <button className="btn wd-course-button ms-2">View Progress</button>
         <select className="form-select wd-publish d-inline wd-course-button ms-2">
           <FaCheckCircle className="me-1" />
-          bj
           <option>Publish All</option>
           <option>Unpublish All</option>
           <option>Unpublish All</option>

@@ -4,7 +4,7 @@ const initialState = {
   modules: <any>[],
   module: {
     course: "",
-    name: "New Module 123",
+    name: "New Module",
     description: "New Description",
   },
 };
@@ -17,7 +17,7 @@ const modulesSlice = createSlice({
       state.modules = action.payload;
     },
     addModule: (state, action) => {
-      state.modules = [action.payload, ...state.modules];
+      state.modules = [...state.modules, action.payload];
     },
     deleteModule: (state, action) => {
       state.modules = state.modules.filter(
