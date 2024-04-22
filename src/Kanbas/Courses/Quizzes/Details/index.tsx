@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import * as client from "../client";
 import { booleanToYesNo } from "../../../../utils/functions";
 import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import "../index.css";
 import { FaPencil } from "react-icons/fa6";
+import "./index.css";
 
 function QuizDetails() {
-  const { quizId } = useParams();
+  const { courseId, quizId } = useParams();
   const [quiz, setQuiz] = useState<client.Quiz>();
+  const navigate = useNavigate();
   const quizProperties = [
     {
       propertyName: "Quiz Type",
@@ -76,6 +78,11 @@ function QuizDetails() {
     const quizResponse: client.Quiz = await client.findQuizById(quizId);
     setQuiz(quizResponse);
   };
+
+  const handleEditQuiz = () => {
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Edit`);
+  };
+
   useEffect(() => {
     getQuiz();
   }, []);
@@ -84,17 +91,15 @@ function QuizDetails() {
     <div className="flex-grow-1 d-block ms-2 me-2">
       <div className="float-end wd-course-button-bar">
         <button
-          className="btn wd-course-button ms-2"
-          style={{
-            borderColor: "green",
-            color: "white",
-            backgroundColor: "green",
-          }}
+          className={
+            "btn wd-course-button ms-2" +
+            (quiz?.status === "Published" ? " wd-quiz-published" : "")
+          }
         >
           <FaCheckCircle className="me-1" /> {quiz?.status}
         </button>
         <button className="btn wd-course-button ms-2">Preview</button>
-        <button className="btn wd-course-button ms-2">
+        <button className="btn wd-course-button ms-2" onClick={handleEditQuiz}>
           <FaPencil className="me-1" />
           Edit
         </button>

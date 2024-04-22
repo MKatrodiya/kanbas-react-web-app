@@ -9,6 +9,7 @@ export interface Quiz {
   type?: string;
   course: string;
   points?: number;
+  description?: string;
   dueDate?: Date;
   availableDate?: Date;
   availableUntil?: Date;
@@ -46,5 +47,10 @@ export const createQuiz = async (courseId: any) => {
     course: courseId,
   };
   const response = await api.post(`${COURSES_API}/${courseId}/quizzes`, quiz);
+  return response.data;
+};
+
+export const updateQuiz = async (quizId: any, quiz: any) => {
+  const response = await api.put(`${QUIZZES_API}/${quizId}`, quiz);
   return response.data;
 };

@@ -8,7 +8,6 @@ import CollapsibleNavigation from "./Courses/CollapsibleNavigation";
 import { useEffect, useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
-import axios from "axios";
 import Account from "./Account";
 
 function Kanbas() {
