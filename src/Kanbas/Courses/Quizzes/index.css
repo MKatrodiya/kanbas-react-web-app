@@ -1,0 +1,47 @@
+.wd-course-button-bar * {
+  border-radius: 0;
+  margin-bottom: 5px;
+}
+
+.btn {
+  border: 1px solid rgb(236, 233, 233);
+  border-radius: 0 !important;
+}
+
+.wd-course-button {
+  background-color: #f5f5f5;
+}
+
+.wd-course-button:hover {
+  background-color: #f5f5f589;
+}
+
+.wd-quizzes,
+.wd-quizzes * {
+  border-radius: 0%;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.wd-quizzes {
+  margin: 5px;
+}
+
+.wd-quizzes > li {
+  border: 1px solid gray !important;
+  /* cursor: pointer; */
+  border-left: 5px solid green;
+}
+
+.wd-quizzes > li > div {
+  padding: 10px;
+  border-left: 5px solid rgb(28, 165, 28) !important;
+}
+
+.wd-quizzes-title {
+  background-color: #f5f5f5;
+  font-size: 1.2em;
+  height: 50px;
+  border-left: 1px solid gray !important;
+}

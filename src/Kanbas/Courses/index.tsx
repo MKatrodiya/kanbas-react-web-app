@@ -16,6 +16,7 @@ import Grades from "./Grades";
 import CollapsibleNavigation from "./CollapsibleNavigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Quizzes from "./Quizzes";
 
 const API_BASE = process.env.REACT_APP_API_BASE;
 
@@ -72,6 +73,7 @@ function Courses({ courses }: { courses: any[] }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="Piazza" element={<h1>Piazza</h1>} />
             <Route path="Assignments" element={<Assignments />} />
+            <Route path="Quizzes/*" element={<Quizzes />} />
             <Route
               path="Assignments/:assignmentId"
               element={<AssignmentEditor />}

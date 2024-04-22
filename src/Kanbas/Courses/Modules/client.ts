@@ -27,7 +27,6 @@ export const findModulesForCourse = async (courseId: any) => {
 
 export const createModule = async (courseId: any, module: any) => {
   const response = await api.post(`${COURSES_API}/${courseId}/modules`, module);
-  console.log(response);
   return response.data;
 };
 
