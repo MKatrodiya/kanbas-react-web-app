@@ -39,3 +39,12 @@ export const bulkCreateQuestions = async (quizId: any, questions: any) => {
   );
   return response.data;
 };
+
+export const publishQuiz = async (quizId: any) => {
+  const quiz = await api.get(`${QUIZZES_API}/${quizId}`);
+  const response = await api.put(`${QUIZZES_API}/${quizId}`, {
+    ...quiz,
+    status: "Published",
+  });
+  return response.data;
+};
