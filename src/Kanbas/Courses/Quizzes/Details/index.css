@@ -1,5 +1,5 @@
 .wd-quiz-published {
-  border-color: green;
-  color: white;
-  background-color: green;
+  border-color: green !important;
+  color: white !important;
+  background-color: green !important;
 }

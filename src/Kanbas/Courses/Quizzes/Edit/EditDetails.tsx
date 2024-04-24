@@ -22,7 +22,7 @@ function EditDetails() {
   const handleSaveAndPublish = async () => {
     await updateQuiz({ ...quiz, status: "Published" });
     setQuiz({ ...quiz, status: "Published" });
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes`);
   };
   const handleCancel = () => {
     navigate(`/Kanbas/Courses/${courseId}/Quizzes`);

@@ -45,3 +45,17 @@
   height: 50px;
   border-left: 1px solid gray !important;
 }
+
+.va-div-flex {
+  display: flex;
+  gap: 30px;
+  /* flex-direction: row; */
+}
+
+.va-flex-end {
+  margin-left: auto;
+}
+.va-div-flex-col {
+  display: flex;
+  flex-direction: column;
+}
