@@ -72,7 +72,10 @@ function EditQuestions() {
     const unmodifiedQuestions = await client.findQuestionsForQuiz(quizId);
     setQuestions(unmodifiedQuestions);
   };
-  const handleSaveAndPublish = () => {};
+  const handleSaveAndPublish = async () => {
+    await handleSave();
+    await client.publishQuiz(quizId);
+  };
   const handleSave = async () => {
     const updatedQuestions = await client.bulkCreateQuestions(
       quizId,
