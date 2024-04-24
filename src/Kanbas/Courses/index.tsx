@@ -14,10 +14,23 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import Grades from "./Grades";
 import CollapsibleNavigation from "./CollapsibleNavigation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Quizzes from "./Quizzes";
+
+const API_BASE = process.env.REACT_APP_BASE_API_URL;
 
 function Courses({ courses }: { courses: any[] }) {
   const { courseId } = useParams();
-  const course = courses.find((course) => course._id === courseId);
+  const COURSES_API = `${API_BASE}/api/courses`;
+  const [course, setCourse] = useState<any>({ _id: "" });
+  const findCourseById = async (courseId?: string) => {
+    const response = await axios.get(`${COURSES_API}/${courseId}`);
+    setCourse(response.data);
+  };
+  useEffect(() => {
+    findCourseById(courseId);
+  }, [courseId]);
   const { pathname } = useLocation();
   const paths = pathname.split(/Courses\/[a-zA-Z0-9]+\//)[1];
   let currentPath = paths.split("/")[0];
@@ -60,6 +73,7 @@ function Courses({ courses }: { courses: any[] }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="Piazza" element={<h1>Piazza</h1>} />
             <Route path="Assignments" element={<Assignments />} />
+            <Route path="Quizzes/*" element={<Quizzes />} />
             <Route
               path="Assignments/:assignmentId"
               element={<AssignmentEditor />}

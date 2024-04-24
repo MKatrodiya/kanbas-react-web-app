@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FaCheckCircle,
   FaChevronRight,
@@ -9,61 +9,32 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import db from "../../Database";
 import "./index.css";
-import { deleteAssignment, setAssignment } from "./assignmentsReducer";
+import {
+  addAssignment,
+  deleteAssignment,
+  setAssignment,
+  setAssignments,
+} from "./assignmentsReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
-function MyVerticallyCenteredModal(props: any) {
-  const dispatch = useDispatch();
-
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Are you sure you want to delete this assignment?
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <b>Assignment Name:</b> {props.assignmentToDelete?.title}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn btn-success" onClick={props.onHide}>
-          No
-        </Button>
-        <Button
-          className="btn btn-danger"
-          onClick={() => {
-            dispatch(deleteAssignment(props?.assignmentToDelete?._id));
-            props.onHide();
-          }}
-        >
-          Yes
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+import * as client from "./client";
 
 function Assignments() {
   const { courseId } = useParams();
-  const assignments = useSelector(
+  const dispatch = useDispatch();
+  useEffect(() => {
+    client.getAllAssignmentsForCourse(courseId).then((assigmentsResponse) => {
+      dispatch(setAssignments(assigmentsResponse));
+    });
+  }, [courseId]);
+  const assignmentList = useSelector(
     (state: KanbasState) => state.assignmentsReducer.assignments
-  );
-  const assignmentList = assignments.filter(
-    (assignment) => assignment.course === courseId
   );
   const [assignmentToDelete, setAssignmentToDelete] = React.useState({});
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
@@ -165,4 +136,47 @@ function Assignments() {
     </div>
   );
 }
+
+function MyVerticallyCenteredModal(props: any) {
+  const dispatch = useDispatch();
+  const assignmentId = props?.assignmentToDelete?._id;
+  const handleDeleteAssinment = () => {
+    client.deleteAssignment(assignmentId).then(() => {
+      dispatch(deleteAssignment(assignmentId));
+    });
+  };
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Are you sure you want to delete this assignment?
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <b>Assignment Name:</b> {props.assignmentToDelete?.title}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button className="btn btn-success" onClick={props.onHide}>
+          No
+        </Button>
+        <Button
+          className="btn btn-danger"
+          onClick={() => {
+            handleDeleteAssinment();
+            props.onHide();
+          }}
+        >
+          Yes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
 export default Assignments;
