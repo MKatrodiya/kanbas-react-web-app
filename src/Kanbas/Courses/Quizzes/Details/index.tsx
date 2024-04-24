@@ -4,7 +4,7 @@ import * as client from "../client";
 import { booleanToYesNo } from "../../../../utils/functions";
 import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import "../index.css";
-import { FaPencil } from "react-icons/fa6";
+import { FaBan, FaPencil } from "react-icons/fa6";
 import "./index.css";
 
 function QuizDetails() {
@@ -96,7 +96,12 @@ function QuizDetails() {
             (quiz?.status === "Published" ? " wd-quiz-published" : "")
           }
         >
-          <FaCheckCircle className="me-1" /> {quiz?.status}
+          {quiz?.status === "Published" ? (
+            <FaCheckCircle className="me-1" />
+          ) : (
+            <FaBan className="me-1" />
+          )}{" "}
+          {quiz?.status}
         </button>
         <button className="btn wd-course-button ms-2">Preview</button>
         <button className="btn wd-course-button ms-2" onClick={handleEditQuiz}>
