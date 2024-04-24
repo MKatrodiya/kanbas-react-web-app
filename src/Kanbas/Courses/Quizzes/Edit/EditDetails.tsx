@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 import * as client from "../client";
-import { Link } from "react-router-dom";
 
 function EditDetails() {
   const { courseId, quizId } = useParams();
@@ -51,22 +52,14 @@ function EditDetails() {
         </div>
         <div className="row mt-4">
           Quiz Instructions:
-          <textarea
-            name="quizDescription"
-            placeholder="Quiz Description"
-            cols={20}
-            rows={5}
-            className="form-control"
-            value={quiz?.description}
-            onChange={(e) => {
-              setQuiz({
-                ...quiz,
-                description: e.target.value,
-              });
+          <br />
+          <CKEditor
+            editor={Editor}
+            data={quiz?.description}
+            onChange={(event, editor) => {
+              setQuiz({ ...quiz, description: editor.getData() });
             }}
-          >
-            {quiz?.description}
-          </textarea>
+          />
         </div>
         <div className="row mt-4">
           <div className="col-2">
@@ -169,7 +162,7 @@ function EditDetails() {
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
-                  timeLimit: e.target.checked ? 10 : 0,
+                  timeLimit: e.target.checked ? 20 : 0,
                 });
               }}
             />
@@ -240,11 +233,11 @@ function EditDetails() {
             <input
               type="datetime-local"
               className="d-inline form-control w-50 ms-2"
-              value={quiz?.showCorrectAnswersAt?.slice(0, -1)}
+              value={quiz?.showCorrectAnswersAt}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
-                  showCorrectAnswersAt: new Date(e.target.value).toISOString(),
+                  showCorrectAnswersAt: e.target.value,
                 });
               }}
             />
@@ -373,11 +366,12 @@ function EditDetails() {
                   className="form-control"
                   id="Due"
                   type="datetime-local"
-                  value={quiz?.dueDate?.slice(0, -1)}
+                  value={quiz?.dueDate}
                   onChange={(e) => {
+                    console.log(e.target.value);
                     setQuiz({
                       ...quiz,
-                      dueDate: new Date(e.target.value).toISOString(),
+                      dueDate: e.target.value,
                     });
                   }}
                 />
@@ -391,11 +385,11 @@ function EditDetails() {
                   className="form-control"
                   id="available-from"
                   type="datetime-local"
-                  value={quiz?.availableDate?.slice(0, -1)}
+                  value={quiz?.availableDate}
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
-                      availableDate: new Date(e.target.value).toISOString(),
+                      availableDate: e.target.value,
                     });
                   }}
                 />
@@ -409,11 +403,11 @@ function EditDetails() {
                   className="form-control"
                   id="until"
                   type="datetime-local"
-                  value={quiz?.availableUntil?.slice(0, -1)}
+                  value={quiz?.availableUntil}
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
-                      availableUntil: new Date(e.target.value).toISOString(),
+                      availableUntil: e.target.value,
                     });
                   }}
                 />

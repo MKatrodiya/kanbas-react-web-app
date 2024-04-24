@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Quizzes from "./Quizzes";
 
-const API_BASE = process.env.REACT_APP_API_BASE;
+const API_BASE = process.env.REACT_APP_BASE_API_URL;
 
 function Courses({ courses }: { courses: any[] }) {
   const { courseId } = useParams();
