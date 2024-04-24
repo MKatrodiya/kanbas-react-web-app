@@ -1,12 +1,22 @@
 import { FormControl, InputGroup } from "react-bootstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
-import { useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
+import * as client from "./client";
 import MultipleChoiceQuestion from "./MultipleChoiceQuestion";
-import { json } from "stream/consumers";
+import { useParams } from "react-router";
+import { get } from "http";
 
 function EditQuestions() {
+  const { quizId } = useParams();
   const [questions, setQuestions] = useState<any>([]);
+  const getQuestions = async () => {
+    const questions = await client.findQuestionsForQuiz(quizId);
+    setQuestions(questions);
+  };
+  useEffect(() => {
+    getQuestions();
+  }, [quizId]);
   const handleUpdateQuestionTitle = (title: string, index: number) => {
     const newQuestions = [...questions];
     newQuestions[index].title = title;
@@ -37,9 +47,39 @@ function EditQuestions() {
     newQuestions[index].correctAnswer = correctAnswer;
     setQuestions(newQuestions);
   };
-  const handleCancel = () => {};
+  const handleSaveQuestion = async (question: any) => {
+    if (question?._id) {
+      await client.updateQuestion(question._id, question);
+    } else {
+      await client.createQuestion(quizId, question);
+    }
+    await getQuestions();
+  };
+  const handleCancelQuestion = async (e: any, index: number) => {
+    e.preventDefault();
+    const questionId = questions[index]._id;
+    if (questionId) {
+      const question = await client.findQuestionById(questionId);
+      const newQuestions = [...questions];
+      newQuestions[index] = question;
+      setQuestions(newQuestions);
+    } else {
+      const newQuestions = questions.filter((_: any, i: number) => i !== index);
+      setQuestions(newQuestions);
+    }
+  };
+  const handleCancel = async () => {
+    const unmodifiedQuestions = await client.findQuestionsForQuiz(quizId);
+    setQuestions(unmodifiedQuestions);
+  };
   const handleSaveAndPublish = () => {};
-  const handleSave = () => {};
+  const handleSave = async () => {
+    const updatedQuestions = await client.bulkCreateQuestions(
+      quizId,
+      questions
+    );
+    setQuestions(updatedQuestions);
+  };
 
   return (
     <>
@@ -47,11 +87,12 @@ function EditQuestions() {
         className="flex-grow-1 mt-3"
         style={{ marginLeft: "10em", marginRight: "10em" }}
       >
-        {questions.map((question: any, index: number) => (
+        {questions?.map((question: any, index: number) => (
           <div className="border border-dark p-3 mb-5" key={index}>
             <div className="row d-flex">
               <input
                 type="text"
+                value={question?.title}
                 className="form-control w-25 ms-3"
                 placeholder="Question Title"
                 onChange={(e) =>
@@ -61,6 +102,7 @@ function EditQuestions() {
               <select
                 id="questionType"
                 className="form-select ms-2 w-25"
+                value={question?.type}
                 onChange={(e) =>
                   handleUpdateQuestionType(e.target.value, index)
                 }
@@ -74,6 +116,8 @@ function EditQuestions() {
                   <InputGroup.Text>Points</InputGroup.Text>
                   <FormControl
                     type="number"
+                    value={question?.points}
+                    min={0}
                     style={{ width: "50px" }}
                     onChange={(e) =>
                       handleUpdateQuestionPoints(e.target.value, index)
@@ -108,7 +152,9 @@ function EditQuestions() {
                 </i>
               </h6>
               <MultipleChoiceQuestion
+                name={"answersRadio " + index}
                 choices={question?.choices}
+                correctAnswer={question?.correctAnswer}
                 setChoices={(updatedChoices: string[]) =>
                   handleUpdateChoices(updatedChoices, index)
                 }
@@ -121,15 +167,18 @@ function EditQuestions() {
               <button
                 className="btn"
                 style={{ backgroundColor: "#f5f5f5" }}
-                onClick={() =>
-                  setQuestions(
-                    questions.filter((_: any, i: number) => i !== index)
-                  )
-                }
+                onClick={async (e) => {
+                  await handleCancelQuestion(e, index);
+                }}
               >
                 Cancel
               </button>
-              <button className="btn btn-danger ms-2">Save Question</button>
+              <button
+                className="btn btn-danger ms-2"
+                onClick={() => handleSaveQuestion(question)}
+              >
+                {question?._id ? "Update" : "Save"} Question
+              </button>
             </div>
           </div>
         ))}

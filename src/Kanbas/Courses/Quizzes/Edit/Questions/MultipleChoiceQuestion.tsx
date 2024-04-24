@@ -2,11 +2,15 @@ import { FormControl, InputGroup } from "react-bootstrap";
 import { FaX } from "react-icons/fa6";
 
 function MultipleChoiceQuestion({
+  name,
   choices,
+  correctAnswer,
   setChoices,
   setCorrectAnswer,
 }: {
+  name: string;
   choices: string[];
+  correctAnswer: string;
   setChoices: (options: string[]) => void;
   setCorrectAnswer: (correctOption: string) => void;
 }): JSX.Element {
@@ -15,8 +19,12 @@ function MultipleChoiceQuestion({
       {choices?.map((choice, index) => (
         <InputGroup className="mt-1" style={{ maxWidth: "400px" }} key={index}>
           <InputGroup.Radio
-            name="answersRadio"
-            onChange={() => setCorrectAnswer(choice)}
+            name={name}
+            onChange={(e) => {
+              // e.preventDefault();
+              setCorrectAnswer(choice);
+            }}
+            checked={correctAnswer === choice}
           />
           <FormControl
             as="textarea"
