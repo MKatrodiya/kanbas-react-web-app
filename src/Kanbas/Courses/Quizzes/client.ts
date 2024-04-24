@@ -45,6 +45,14 @@ export const createQuiz = async (courseId: any) => {
   const quiz = {
     title: "New Quiz",
     course: courseId,
+    type: "Graded Quiz",
+    assignmentGroup: "Quizzes",
+    shuffleAnswers: true,
+    timeLimit: 20,
+    multipleAttempts: false,
+    oneQuestionAtATime: true,
+    webcamRequired: false,
+    lockQuestionsAfterAnswering: false,
   };
   const response = await api.post(`${COURSES_API}/${courseId}/quizzes`, quiz);
   return response.data;
@@ -52,5 +60,11 @@ export const createQuiz = async (courseId: any) => {
 
 export const updateQuiz = async (quizId: any, quiz: any) => {
   const response = await api.put(`${QUIZZES_API}/${quizId}`, quiz);
+  return response.data;
+};
+
+export const deleteQuiz = async (quizId: string) => {
+  // console.log(quizId);
+  const response = await api.delete(`${QUIZZES_API}/${quizId}`);
   return response.data;
 };

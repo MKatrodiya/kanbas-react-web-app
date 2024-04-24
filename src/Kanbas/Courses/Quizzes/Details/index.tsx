@@ -84,17 +84,34 @@ function QuizDetails() {
   };
 
   useEffect(() => {
+    // const a = quiz?.status;
     getQuiz();
   }, []);
 
+  const handlePublishQuiz = async (quiz: any) => {
+    const updatedStatus =
+      quiz?.status === "Unpublished" ? "Published" : "Unpublished";
+    const updatedQuiz = { ...quiz, status: updatedStatus };
+    await client.updateQuiz(quiz?._id, updatedQuiz);
+    setQuiz(updatedQuiz);
+
+    // const button = document.getElementById("publishButton");
+    // if (button) {
+    //   button.classList.toggle("wd-quiz-published");
+    // }
+  };
   return (
     <div className="flex-grow-1 d-block ms-2 me-2">
       <div className="float-end wd-course-button-bar">
         <button
+          id="publishButton"
           className={
             "btn wd-course-button ms-2" +
             (quiz?.status === "Published" ? " wd-quiz-published" : "")
           }
+          onClick={() => {
+            handlePublishQuiz(quiz);
+          }}
         >
           <FaCheckCircle className="me-1" /> {quiz?.status}
         </button>
@@ -130,10 +147,22 @@ function QuizDetails() {
             </thead>
             <tbody>
               <tr>
-                <td>{quiz?.dueDate?.toString()}</td>
+                <td>
+                  {quiz?.dueDate
+                    ? new Date(quiz.dueDate).toLocaleDateString()
+                    : ""}
+                </td>
                 <td>Everyone</td>
-                <td>{quiz?.availableDate?.toString()}</td>
-                <td>{quiz?.availableUntil?.toString()}</td>
+                <td>
+                  {quiz?.availableDate
+                    ? new Date(quiz.availableDate).toLocaleDateString()
+                    : ""}
+                </td>
+                <td>
+                  {quiz?.availableUntil
+                    ? new Date(quiz.availableUntil).toLocaleDateString()
+                    : ""}
+                </td>
               </tr>
             </tbody>
           </table>
