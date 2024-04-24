@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import * as client from "../client";
-import { Link } from "react-router-dom";
 
 function EditDetails() {
   const { courseId, quizId } = useParams();
