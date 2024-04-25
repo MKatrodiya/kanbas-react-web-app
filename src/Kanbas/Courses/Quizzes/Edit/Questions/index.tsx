@@ -2,14 +2,38 @@ import { FormControl, InputGroup } from "react-bootstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { MouseEvent, useEffect, useState } from "react";
-import * as client from "./client";
+import * as client from "../../questionsClient";
 import MultipleChoiceQuestion from "./MultipleChoiceQuestion";
 import { useParams } from "react-router";
 import { get } from "http";
+import TrueFalseQuestion from "./TrueFalseQuestion";
+import FillInTheBlanksQuestion from "./FillInTheBlanksQuestion";
 
 function EditQuestions() {
   const { quizId } = useParams();
   const [questions, setQuestions] = useState<any>([]);
+  const questionTypes = [
+    {
+      type: "Multiple Choice",
+      questionInstruction:
+        "Enter your question and multiple answers, then select the correct answer.",
+      answerInstruction:
+        "Click the radio button to mark a choice as correct answer",
+    },
+    {
+      type: "True/False",
+      questionInstruction:
+        "Enter your question, then select if True or False is the correct answer.",
+      answerInstruction: "Click the radio button to mark a correct answer",
+    },
+    {
+      type: "Fill in the Blanks",
+      questionInstruction:
+        "Enter your question, then define the blank spaces using 5 underscores. Define all possible correct answers for the blanks.",
+      answerInstruction:
+        "Enter the correct answers for the blanks separated by commas.",
+    },
+  ];
   const getQuestions = async () => {
     const questions = await client.findQuestionsForQuiz(quizId);
     setQuestions(questions);
@@ -25,6 +49,9 @@ function EditQuestions() {
   const handleUpdateQuestionType = (type: string, index: number) => {
     const newQuestions = [...questions];
     newQuestions[index].type = type;
+    newQuestions[index].choices = [];
+    newQuestions[index].correctAnswer = "";
+    newQuestions[index].blanksAnswers = [];
     setQuestions(newQuestions);
   };
   const handleUpdateQuestionPoints = (points: string, index: number) => {
@@ -40,11 +67,22 @@ function EditQuestions() {
   const handleUpdateChoices = (updatedChoices: string[], index: number) => {
     const newQuestions = [...questions];
     newQuestions[index].choices = updatedChoices;
+    newQuestions[index].correctAnswer = "";
+    newQuestions[index].blanksAnswers = [];
     setQuestions(newQuestions);
   };
   const handleUpdateCorrectAnswer = (correctAnswer: string, index: number) => {
     const newQuestions = [...questions];
     newQuestions[index].correctAnswer = correctAnswer;
+    setQuestions(newQuestions);
+  };
+  const handleUpdateBlanksAnswers = (
+    blanksAnswers: string[],
+    index: number
+  ) => {
+    const newQuestions = [...questions];
+    newQuestions[index].blanksAnswers = blanksAnswers;
+    newQuestions[index].choices = [];
     setQuestions(newQuestions);
   };
   const handleSaveQuestion = async (question: any) => {
@@ -82,6 +120,11 @@ function EditQuestions() {
       questions
     );
     setQuestions(updatedQuestions);
+  };
+  const handleDeleteQuestion = async (e: MouseEvent, questionId: string) => {
+    e.preventDefault();
+    await client.deleteQuestion(questionId);
+    await getQuestions();
   };
 
   return (
@@ -132,8 +175,10 @@ function EditQuestions() {
             <hr />
             <div>
               <p>
-                Enter your questions and multiple answers, then select the
-                correct answer
+                {
+                  questionTypes.find((q) => q.type === question?.type)
+                    ?.questionInstruction
+                }
               </p>
               <h6>
                 <b>Question:</b>
@@ -151,22 +196,47 @@ function EditQuestions() {
               <h6>
                 <b>Answers:</b>{" "}
                 <i>
-                  (Click the radio button to mark a choice as correct answer)
+                  (
+                  {
+                    questionTypes.find((q) => q.type === question?.type)
+                      ?.answerInstruction
+                  }
                 </i>
               </h6>
-              <MultipleChoiceQuestion
-                name={"answersRadio " + index}
-                choices={question?.choices}
-                correctAnswer={question?.correctAnswer}
-                setChoices={(updatedChoices: string[]) =>
-                  handleUpdateChoices(updatedChoices, index)
-                }
-                setCorrectAnswer={(correctAnswer: any) =>
-                  handleUpdateCorrectAnswer(correctAnswer, index)
-                }
-              />
+              {question?.type === "Multiple Choice" && (
+                <MultipleChoiceQuestion
+                  name={"multipleChoicesRadio " + index}
+                  choices={question?.choices}
+                  correctAnswer={question?.correctAnswer}
+                  setChoices={(updatedChoices: string[]) =>
+                    handleUpdateChoices(updatedChoices, index)
+                  }
+                  setCorrectAnswer={(correctAnswer: any) =>
+                    handleUpdateCorrectAnswer(correctAnswer, index)
+                  }
+                />
+              )}
+              {question?.type === "True/False" && (
+                <TrueFalseQuestion
+                  name={"trueFalseRadio" + index}
+                  correctAnswer={question?.correctAnswer}
+                  setCorrectAnswer={(correctAnswer: any) =>
+                    handleUpdateCorrectAnswer(correctAnswer, index)
+                  }
+                />
+              )}
+              {question?.type === "Fill in the Blanks" && (
+                <FillInTheBlanksQuestion
+                  name={"fillTheBlanks" + index}
+                  question={question?.question}
+                  blankAnswers={question?.blanksAnswers}
+                  setBlanksAnswers={(blanksAnswers: string[]) =>
+                    handleUpdateBlanksAnswers(blanksAnswers, index)
+                  }
+                />
+              )}
             </div>
-            <div>
+            <div className="d-flex mt-3">
               <button
                 className="btn"
                 style={{ backgroundColor: "#f5f5f5" }}
@@ -177,11 +247,20 @@ function EditQuestions() {
                 Cancel
               </button>
               <button
-                className="btn btn-danger ms-2"
+                className="btn btn-success ms-2"
                 onClick={() => handleSaveQuestion(question)}
               >
                 {question?._id ? "Update" : "Save"} Question
               </button>
+              {question?._id && (
+                <button
+                  className="btn btn-danger ms-auto"
+                  type="submit"
+                  onClick={(e) => handleDeleteQuestion(e, question._id)}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -199,6 +278,7 @@ function EditQuestions() {
                 choices: [],
                 question: "",
                 correctAnswer: "",
+                blanksAnswers: [],
               },
             ])
           }
@@ -207,7 +287,7 @@ function EditQuestions() {
           + New Question
         </button>
       </div>
-      <div className="d-flex me-5" style={{ alignItems: "center" }}>
+      <div className="d-flex mt-3 me-5 mb-3" style={{ alignItems: "center" }}>
         <div className="ms-auto">
           <button
             className="wd-asmt-button me-1"

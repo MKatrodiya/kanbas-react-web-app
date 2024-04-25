@@ -100,6 +100,12 @@ function QuizDetails() {
     //   button.classList.toggle("wd-quiz-published");
     // }
   };
+
+  const breadcrumbsElement = document.getElementById("wd-breadcrumbs-id");
+  if (breadcrumbsElement) {
+    breadcrumbsElement.innerText = quiz?.title || "";
+  }
+
   return (
     <div className="flex-grow-1 d-block ms-2 me-2">
       <div className="float-end wd-course-button-bar">
@@ -120,7 +126,14 @@ function QuizDetails() {
           )}{" "}
           {quiz?.status}
         </button>
-        <button className="btn wd-course-button ms-2">Preview</button>
+        <button
+          className="btn wd-course-button ms-2"
+          onClick={() =>
+            navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Preview`)
+          }
+        >
+          Preview
+        </button>
         <button className="btn wd-course-button ms-2" onClick={handleEditQuiz}>
           <FaPencil className="me-1" />
           Edit

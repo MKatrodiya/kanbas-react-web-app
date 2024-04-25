@@ -155,8 +155,8 @@ function QuizzesList() {
                         ? new Date(quiz.dueDate).toISOString().split("T")[0]
                         : "No Due Date"}
                     </div>
-                    <div>Questions - </div>
-                    <div>Points - </div>
+                    <div>Questions - {quiz?.questions?.length}</div>
+                    <div>Points - {quiz?.points ?? 0}</div>
                   </div>
                 </div>
                 <span className="float-end va-flex-end">

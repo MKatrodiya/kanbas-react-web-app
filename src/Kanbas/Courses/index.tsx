@@ -53,7 +53,7 @@ function Courses({ courses }: { courses: any[] }) {
           {assignmentId && (
             <div className={`ms-2 align-middle d-inline`}>
               <FaAngleRight />
-              {assignmentId}
+              <span id="wd-breadcrumbs-id">{assignmentId}</span>
             </div>
           )}
           <div style={{ marginLeft: "auto" }}>

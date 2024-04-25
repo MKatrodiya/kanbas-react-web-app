@@ -1,6 +1,8 @@
 import * as client from "./client";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setCurrentUser } from "./reducer";
 export default function Profile() {
   const [profile, setProfile] = useState({
     _id: "",
@@ -14,6 +16,7 @@ export default function Profile() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const fetchProfile = async () => {
     try {
       const account = await client.profile();
@@ -25,6 +28,8 @@ export default function Profile() {
   };
   const signout = async () => {
     await client.signout();
+    dispatch(setCurrentUser({ _id: "", username: "", email: "", role: "" }));
+    localStorage.removeItem("currentUser");
     navigate("/Kanbas/Account/Signin");
   };
   useEffect(() => {

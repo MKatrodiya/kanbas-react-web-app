@@ -48,3 +48,8 @@ export const publishQuiz = async (quizId: any) => {
   });
   return response.data;
 };
+
+export const deleteQuestion = async (questionId: any) => {
+  const response = await api.delete(`${QUESTIONS_API}/${questionId}`);
+  return response.data;
+};

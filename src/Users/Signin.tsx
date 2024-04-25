@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "./client";
 import * as client from "./client";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "./reducer";
 export default function Signin() {
   const [credentials, setCredentials] = useState<User>({
     _id: "",
@@ -13,15 +15,25 @@ export default function Signin() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const signin = async () => {
     try {
-      await client.signin(credentials);
+      const user = await client.signin(credentials);
+      dispatch(setCurrentUser(user));
+      localStorage.setItem("currentUser", JSON.stringify(user));
     } catch (error: any) {
       setError("Invalid credentials");
       return;
     }
     navigate("/Kanbas/Account/Profile");
   };
+  useEffect(() => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser) {
+      dispatch(setCurrentUser(JSON.parse(currentUser)));
+      navigate("/Kanbas/Account/Profile");
+    }
+  }, []);
 
   return (
     <div>

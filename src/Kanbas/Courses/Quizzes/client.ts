@@ -64,7 +64,6 @@ export const updateQuiz = async (quizId: any, quiz: any) => {
 };
 
 export const deleteQuiz = async (quizId: string) => {
-  // console.log(quizId);
   const response = await api.delete(`${QUIZZES_API}/${quizId}`);
   return response.data;
 };
