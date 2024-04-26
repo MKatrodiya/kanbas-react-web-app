@@ -235,9 +235,12 @@ function EditDetails() {
             <input
               type="datetime-local"
               className="d-inline form-control w-50 ms-2"
-              value={DateTime.fromISO(quiz?.showCorrectAnswersAt).toFormat(
-                "yyyy-MM-dd'T'HH:mm"
-              )}
+              value={
+                quiz?.showCorrectAnswersAt &&
+                DateTime.fromISO(quiz?.showCorrectAnswersAt).toFormat(
+                  "yyyy-MM-dd'T'HH:mm"
+                )
+              }
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -370,9 +373,12 @@ function EditDetails() {
                   className="form-control"
                   id="Due"
                   type="datetime-local"
-                  value={DateTime.fromISO(quiz?.dueDate).toFormat(
-                    "yyyy-MM-dd'T'HH:mm"
-                  )}
+                  value={
+                    quiz?.dueDate &&
+                    DateTime.fromISO(quiz?.dueDate).toFormat(
+                      "yyyy-MM-dd'T'HH:mm"
+                    )
+                  }
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
@@ -390,9 +396,12 @@ function EditDetails() {
                   className="form-control"
                   id="available-from"
                   type="datetime-local"
-                  value={DateTime.fromISO(quiz?.availableDate).toFormat(
-                    "yyyy-MM-dd'T'HH:mm"
-                  )}
+                  value={
+                    quiz?.availableDate &&
+                    DateTime.fromISO(quiz?.availableDate).toFormat(
+                      "yyyy-MM-dd'T'HH:mm"
+                    )
+                  }
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
@@ -410,9 +419,12 @@ function EditDetails() {
                   className="form-control"
                   id="until"
                   type="datetime-local"
-                  value={DateTime.fromISO(quiz?.availableUntil).toFormat(
-                    "yyyy-MM-dd'T'HH:mm"
-                  )}
+                  value={
+                    quiz?.availableUntil &&
+                    DateTime.fromISO(quiz?.availableUntil).toFormat(
+                      "yyyy-MM-dd'T'HH:mm"
+                    )
+                  }
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
