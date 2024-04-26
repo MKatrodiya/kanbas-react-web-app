@@ -19,8 +19,13 @@ export default function Profile() {
   const dispatch = useDispatch();
   const fetchProfile = async () => {
     try {
-      const account = await client.profile();
-      setProfile(account);
+      const loggedInUser = localStorage.getItem("currentUser");
+      if (!loggedInUser) {
+        const account = await client.profile();
+        setProfile(account);
+      } else {
+        setProfile(JSON.parse(loggedInUser));
+      }
       setError("");
     } catch (error: any) {
       setError("User not found");
