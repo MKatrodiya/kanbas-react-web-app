@@ -43,13 +43,15 @@ function QuizDetails() {
     },
     {
       propertyName: "Show Correct Answers At",
-      value: DateTime.fromISO(quiz?.showCorrectAnswersAt ?? "").toLocaleString({
-        weekday: "short",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      value:
+        quiz?.showCorrectAnswerAt &&
+        DateTime.fromISO(quiz?.showCorrectAnswersAt ?? "").toLocaleString({
+          weekday: "short",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
     },
     {
       propertyName: "Access Code",
@@ -69,33 +71,39 @@ function QuizDetails() {
     },
     {
       propertyName: "Due Date",
-      value: DateTime.fromISO(quiz?.dueDate ?? "").toLocaleString({
-        weekday: "short",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      value:
+        quiz?.dueDate &&
+        DateTime.fromISO(quiz?.dueDate ?? "").toLocaleString({
+          weekday: "short",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
     },
     {
       propertyName: "Available Date",
-      value: DateTime.fromISO(quiz?.availableDate ?? "").toLocaleString({
-        weekday: "short",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      value:
+        quiz?.availableDate &&
+        DateTime.fromISO(quiz?.availableDate ?? "").toLocaleString({
+          weekday: "short",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
     },
     {
       propertyName: "Until Date",
-      value: DateTime.fromISO(quiz?.availableUntil ?? "").toLocaleString({
-        weekday: "short",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      value:
+        quiz?.availableUntil &&
+        DateTime.fromISO(quiz?.availableUntil ?? "").toLocaleString({
+          weekday: "short",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
     },
   ];
 
@@ -191,32 +199,39 @@ function QuizDetails() {
             <tbody>
               <tr>
                 <td>
-                  {DateTime.fromISO(quiz?.dueDate ?? "").toLocaleString({
-                    weekday: "short",
-                    month: "short",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {quiz?.dueDate &&
+                    DateTime.fromISO(quiz?.dueDate ?? "")?.toLocaleString({
+                      weekday: "short",
+                      month: "short",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                 </td>
                 <td>Everyone</td>
                 <td>
-                  {DateTime.fromISO(quiz?.availableDate ?? "").toLocaleString({
-                    weekday: "short",
-                    month: "short",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {quiz?.availableDate &&
+                    DateTime.fromISO(quiz?.availableDate ?? "")?.toLocaleString(
+                      {
+                        weekday: "short",
+                        month: "short",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
                 </td>
                 <td>
-                  {DateTime.fromISO(quiz?.availableUntil ?? "").toLocaleString({
-                    weekday: "short",
-                    month: "short",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {quiz?.availableUntil &&
+                    DateTime.fromISO(
+                      quiz?.availableUntil ?? ""
+                    )?.toLocaleString({
+                      weekday: "short",
+                      month: "short",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                 </td>
               </tr>
             </tbody>
