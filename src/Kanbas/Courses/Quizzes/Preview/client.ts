@@ -27,6 +27,5 @@ export const submitAnswers = async (quizId: any, userId: any, answers: any) => {
       answers
     );
   }
-  debugger;
   return response?.data;
 };

@@ -44,7 +44,7 @@ function QuizPreview() {
       currentUser._id
     );
     setSavedAnswers(answers);
-    setSelectedAnswers(answers?.answers);
+    setSelectedAnswers(answers?.answers || []);
   };
   useEffect(() => {
     getQuiz();
@@ -52,22 +52,20 @@ function QuizPreview() {
   }, [quizId]);
   const handleAnswerSelection = (_id: string, answer: any) => {
     const newSelectedAnswers = [...selectedAnswers];
-    const currentAnswer = newSelectedAnswers.find((a) => a.question === _id);
+    const currentAnswer = newSelectedAnswers?.find((a) => a.question === _id);
     if (currentAnswer) {
       currentAnswer.answer = answer;
     } else {
-      newSelectedAnswers.push({ question: _id, answer });
+      newSelectedAnswers?.push({ question: _id, answer });
     }
     setSelectedAnswers(newSelectedAnswers);
   };
   const handleSubmit = async () => {
-    // console.log(selectedAnswers);
     const response = await answersClient.submitAnswers(
       quizId,
       currentUser?._id,
       { ...savedAnswers, answers: selectedAnswers }
     );
-    console.log(response);
   };
   const breadcrumbsElement = document.getElementById("wd-breadcrumbs-id");
   if (breadcrumbsElement) {

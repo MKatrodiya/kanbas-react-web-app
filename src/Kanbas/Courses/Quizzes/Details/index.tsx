@@ -6,10 +6,11 @@ import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import "../index.css";
 import { FaBan, FaPencil } from "react-icons/fa6";
 import "./index.css";
+import { DateTime } from "luxon";
 
 function QuizDetails() {
   const { courseId, quizId } = useParams();
-  const [quiz, setQuiz] = useState<client.Quiz>();
+  const [quiz, setQuiz] = useState<any>();
   const navigate = useNavigate();
   const quizProperties = [
     {
@@ -42,7 +43,13 @@ function QuizDetails() {
     },
     {
       propertyName: "Show Correct Answers At",
-      value: quiz?.showCorrectAnswersAt?.toString(),
+      value: DateTime.fromISO(quiz?.showCorrectAnswersAt ?? "").toLocaleString({
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     },
     {
       propertyName: "Access Code",
@@ -62,15 +69,33 @@ function QuizDetails() {
     },
     {
       propertyName: "Due Date",
-      value: quiz?.dueDate?.toString(),
+      value: DateTime.fromISO(quiz?.dueDate ?? "").toLocaleString({
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     },
     {
       propertyName: "Available Date",
-      value: quiz?.availableDate?.toString(),
+      value: DateTime.fromISO(quiz?.availableDate ?? "").toLocaleString({
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     },
     {
       propertyName: "Until Date",
-      value: quiz?.availableUntil?.toString(),
+      value: DateTime.fromISO(quiz?.availableUntil ?? "").toLocaleString({
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     },
   ];
 
@@ -166,20 +191,32 @@ function QuizDetails() {
             <tbody>
               <tr>
                 <td>
-                  {quiz?.dueDate
-                    ? new Date(quiz.dueDate).toLocaleDateString()
-                    : ""}
+                  {DateTime.fromISO(quiz?.dueDate ?? "").toLocaleString({
+                    weekday: "short",
+                    month: "short",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </td>
                 <td>Everyone</td>
                 <td>
-                  {quiz?.availableDate
-                    ? new Date(quiz.availableDate).toLocaleDateString()
-                    : ""}
+                  {DateTime.fromISO(quiz?.availableDate ?? "").toLocaleString({
+                    weekday: "short",
+                    month: "short",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </td>
                 <td>
-                  {quiz?.availableUntil
-                    ? new Date(quiz.availableUntil).toLocaleDateString()
-                    : ""}
+                  {DateTime.fromISO(quiz?.availableUntil ?? "").toLocaleString({
+                    weekday: "short",
+                    month: "short",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </td>
               </tr>
             </tbody>

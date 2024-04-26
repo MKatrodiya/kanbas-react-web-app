@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import * as client from "../client";
+import { DateTime } from "luxon";
 
 function EditDetails() {
   const { courseId, quizId } = useParams();
@@ -41,6 +42,7 @@ function EditDetails() {
             name="quizTitle"
             className="form-control"
             placeholder="Quiz Title"
+            style={{ maxWidth: "500px" }}
             value={quiz?.title}
             onChange={(e) => {
               setQuiz({
@@ -50,9 +52,9 @@ function EditDetails() {
             }}
           />
         </div>
-        <div className="row mt-4">
-          Quiz Instructions:
-          <br />
+        <br />
+        Quiz Instructions:
+        <div className="row mt-2">
           <CKEditor
             editor={Editor}
             data={quiz?.description}
@@ -139,7 +141,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-shuffle-answers"
-              checked={quiz?.shuffleAnswers}
+              defaultChecked={quiz?.shuffleAnswers}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -158,7 +160,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-time-limit"
-              checked={quiz?.timeLimit ? true : false}
+              defaultChecked={quiz?.timeLimit ? true : false}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -190,7 +192,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-multiple-attempts"
-              checked={quiz?.multipleAttempts}
+              defaultChecked={quiz?.multipleAttempts}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -209,7 +211,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-show-correct-answers"
-              checked={quiz?.showCorrectAnswers}
+              defaultChecked={quiz?.showCorrectAnswers}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -233,7 +235,9 @@ function EditDetails() {
             <input
               type="datetime-local"
               className="d-inline form-control w-50 ms-2"
-              value={quiz?.showCorrectAnswersAt}
+              value={DateTime.fromISO(quiz?.showCorrectAnswersAt).toFormat(
+                "yyyy-MM-dd'T'HH:mm"
+              )}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -267,7 +271,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-one-question-at-a-time"
-              checked={quiz?.oneQuestionAtATime}
+              defaultChecked={quiz?.oneQuestionAtATime}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -289,7 +293,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-webcam-required"
-              checked={quiz?.webcamRequired}
+              defaultChecked={quiz?.webcamRequired}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -308,7 +312,7 @@ function EditDetails() {
             <input
               type="checkbox"
               id="quiz-lock-questions-after-answering"
-              checked={quiz?.lockQuestionsAfterAnswering}
+              defaultChecked={quiz?.lockQuestionsAfterAnswering}
               onChange={(e) => {
                 setQuiz({
                   ...quiz,
@@ -366,9 +370,10 @@ function EditDetails() {
                   className="form-control"
                   id="Due"
                   type="datetime-local"
-                  value={quiz?.dueDate}
+                  value={DateTime.fromISO(quiz?.dueDate).toFormat(
+                    "yyyy-MM-dd'T'HH:mm"
+                  )}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setQuiz({
                       ...quiz,
                       dueDate: e.target.value,
@@ -385,7 +390,9 @@ function EditDetails() {
                   className="form-control"
                   id="available-from"
                   type="datetime-local"
-                  value={quiz?.availableDate}
+                  value={DateTime.fromISO(quiz?.availableDate).toFormat(
+                    "yyyy-MM-dd'T'HH:mm"
+                  )}
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
@@ -403,7 +410,9 @@ function EditDetails() {
                   className="form-control"
                   id="until"
                   type="datetime-local"
-                  value={quiz?.availableUntil}
+                  value={DateTime.fromISO(quiz?.availableUntil).toFormat(
+                    "yyyy-MM-dd'T'HH:mm"
+                  )}
                   onChange={(e) => {
                     setQuiz({
                       ...quiz,
